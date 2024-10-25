@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MSS.WLIM.Role.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6054c53cba40c3aa50b78794f2e979b9034bde60")]
 [assembly: System.Reflection.AssemblyProductAttribute("MSS.WLIM.Role.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MSS.WLIM.Role.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
