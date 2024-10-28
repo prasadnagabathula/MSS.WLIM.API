@@ -17,7 +17,7 @@ namespace MSS.WLIM.DataServices.Data
         public DbSet<Departments> WHTblDepartment { get; set; }
         public DbSet<Designations> WHTblDesignation { get; set; }
         public DbSet<Users> WHTblUser { get; set; }
-
+        public DbSet<LostItemRequests> WHTblLostItemRequest { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
