@@ -20,6 +20,7 @@ namespace MSS.WLIM.Login.API.Services
         public class AuthResponse
         {
             public string Token { get; set; }
+            public string Username { get; set; }
             public string Role { get; set; }
         }
 
@@ -36,6 +37,7 @@ namespace MSS.WLIM.Login.API.Services
                 authResponse = new AuthResponse
                 {
                     Token = token,
+                    Username = userName,
                     Role = role
                 };
             }

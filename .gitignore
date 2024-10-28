@@ -1,4 +1,12 @@
-bin/
-obj/
-log/
 .vs/
+/MSS.WLIM.Department.API/LOG
+/MSS.WLIM.Designation.API/LOG
+/MSS.WLIM.Login.API/LOG
+/MSS.WLIM.LostItemRequest.API
+/MSS.WLIM.User.API/LOG
+/MSS.WLIM.DataServices/obj
+/MSS.WLIM.Department.API/obj
+/MSS.WLIM.Designation.API/obj
+/MSS.WLIM.Login.API/obj
+/MSS.WLIM.Role.API/obj
+/MSS.WLIM.User.API/obj
