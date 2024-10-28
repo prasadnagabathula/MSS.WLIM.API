@@ -10,3 +10,12 @@
 /MSS.WLIM.Login.API/obj
 /MSS.WLIM.Role.API/obj
 /MSS.WLIM.User.API/obj
+/MSS.WLIM.DataServices/bin/Debug/net8.0
+/MSS.WLIM.Department.API/bin/Debug/net8.0
+/MSS.WLIM.Designation.API/bin/Debug/net8.0
+/MSS.WLIM.IdentifiedItems.API/bin/Debug/net8.0
+/MSS.WLIM.IdentifiedItems.API/obj/Debug/net8.0
+/MSS.WLIM.IdentifiedItems.API/obj
+/MSS.WLIM.Login.API/bin/Debug/net8.0
+/MSS.WLIM.Role.API/bin/Debug/net8.0
+/MSS.WLIM.User.API/bin/Debug/net8.0
