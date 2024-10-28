@@ -18,6 +18,8 @@ namespace MSS.WLIM.DataServices.Data
         public DbSet<Designations> WHTblDesignation { get; set; }
         public DbSet<Users> WHTblUser { get; set; }
         public DbSet<LostItemRequests> WHTblLostItemRequest { get; set; }
+        public DbSet<IdentifiedItems> WHTblIdentifiedItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 

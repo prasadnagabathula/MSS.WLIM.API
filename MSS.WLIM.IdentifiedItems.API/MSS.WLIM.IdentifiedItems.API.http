@@ -1,0 +1,6 @@
+@MSS.WLIM.IdentifiedItems.API_HostAddress = http://localhost:5281
+
+GET {{MSS.WLIM.IdentifiedItems.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
