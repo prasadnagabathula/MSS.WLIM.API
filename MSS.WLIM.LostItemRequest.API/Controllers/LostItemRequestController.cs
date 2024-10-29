@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MSS.WLIM.DataServices.Models;
 using MSS.WLIM.LostItemRequest.API.Services;
@@ -87,6 +88,22 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             {
                 _logger.LogWarning(ex.Message);
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost("itemPhoto")]
+        //[Authorize(Roles = "Admin, Director, Project Manager")]
+        public async Task<IActionResult> UploadPhoto(LostItemRequestPhoto lostItemRequestPhoto)
+        {
+            try
+            {
+                var photoPath = await _Service.UploadPhotoAsync(lostItemRequestPhoto);
+                return Ok(new { message = "Your Photo is uploaded successfully.", path = photoPath });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error uploading Photo");
+                return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
 
