@@ -32,7 +32,7 @@ namespace MSS.WLIM.DataServices.Models
 
     public class LostItemRequestPhoto
     {
-        public string? Id { get; set; }
+        //public string? Id { get; set; }
 
        // [FileExtensions(Extensions = "png,jpg,jpeg", ErrorMessage = "Photo must be a .png, .jpg, or .jpeg file.")]
         public IFormFile? ItemPhoto { get; set; }
