@@ -121,15 +121,6 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 CreatedBy = _object.CreatedBy,
                 CreatedDate = DateTime.Now
             };
-            //---------------------------------------------------------
-            if (!string.IsNullOrWhiteSpace(_object.ItemPhoto))
-            {
-                lostItemRequest.ItemPhoto = _object.ItemPhoto;
-            }
-            else
-            {
-                lostItemRequest.ItemPhoto = null;
-            }
 
             _context.WHTblLostItemRequest.Add(lostItemRequest);
             await _context.SaveChangesAsync();
@@ -140,53 +131,22 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
         public async Task<string> UploadPhotoAsync(LostItemRequestPhoto lostItemRequestPhoto)
         {
-            string photoPath = null; // Initialize as null to handle no-photo cases
+            string fileName = ""; // Variable to hold the file name
             try
             {
                 // Check if a file is uploaded and not empty
                 if (lostItemRequestPhoto.ItemPhoto != null && lostItemRequestPhoto.ItemPhoto.Length > 0)
                 {
                     var file = lostItemRequestPhoto.ItemPhoto;
-                    photoPath = Path.GetFullPath($"C:\\Users\\mshaik5\\Desktop\\LostItemPhotos\\{file.FileName}");
+                    fileName = Path.GetFileName(file.FileName); // Get just the file name
+
+                    // Define the full path where the file will be saved
+                    var photoPath = Path.Combine("C:\\Users\\mshaik5\\Desktop\\LostItemPhotos", fileName);
 
                     // Save file to the specified path
                     using (var stream = System.IO.File.Create(photoPath))
                     {
                         await file.CopyToAsync(stream);
-                    }
-
-                    // Update employee's profile if ID is provided
-                    if (!string.IsNullOrEmpty(lostItemRequestPhoto.Id))
-                    {
-                        var item = await Get(lostItemRequestPhoto.Id);
-
-                        if (item != null)
-                        {
-                            item.ItemPhoto = file.FileName;
-                            await Update(item);
-                        }
-                    }
-                    else
-                    {
-                        return file.FileName;
-                    }
-                }
-                else
-                {
-                    // Set ItemPhoto to null if no valid file is uploaded
-                    if (!string.IsNullOrWhiteSpace(lostItemRequestPhoto.Id))
-                    {
-                        var item = await Get(lostItemRequestPhoto.Id);
-
-                        if (item != null)
-                        {
-                            item.ItemPhoto = null;
-                            await Update(item);
-                        }
-                    }
-                    else
-                    {
-                        return null; // No file uploaded and no ID provided
                     }
                 }
             }
@@ -195,7 +155,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 throw new Exception("An error occurred while uploading the photo: " + ex.Message);
             }
 
-            return photoPath;
+            return fileName; // Return only the filename if needed
         }
 
         public async Task<LostItemRequests> Update(LostItemRequests _object)

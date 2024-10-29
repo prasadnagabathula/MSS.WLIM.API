@@ -80,6 +80,26 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
 
             try
             {
+                var lostItemRequest = new LostItemRequests
+                {
+                    Description = createDto.Description,
+                    Color = createDto.Color,
+                    Size = createDto.Size,
+                    Brand = createDto.Brand,
+                    Model = createDto.Model,
+                    DistinguishingFeatures = createDto.DistinguishingFeatures,
+                    ItemCategory = createDto.ItemCategory,
+                    SerialNumber = createDto.SerialNumber,
+                    DateTimeWhenLost = createDto.DateTimeWhenLost,
+                    Location = createDto.Location,
+                    ItemValue = createDto.ItemValue,
+                    ItemPhoto = createDto.ItemPhoto,
+                    ProofofOwnership = createDto.ProofofOwnership,
+                    HowtheItemLost = createDto.HowtheItemLost,
+                    ReferenceNumber = createDto.ReferenceNumber,
+                    AdditionalInformation = createDto.AdditionalInformation,
+                    OtherRelevantDetails = createDto.OtherRelevantDetails
+                };
                 //var departmentDto = new DepartmentDTO { Name = createDto.Name }; // Create a new DTO instance for the service
                 var created = await _Service.Add(createDto);
                 return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);
@@ -98,7 +118,7 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             try
             {
                 var photoPath = await _Service.UploadPhotoAsync(lostItemRequestPhoto);
-                return Ok(new { message = "Your Photo is uploaded successfully.", path = photoPath });
+                return Ok(new { message = "Your File is uploaded successfully.", path = photoPath });
             }
             catch (Exception ex)
             {
