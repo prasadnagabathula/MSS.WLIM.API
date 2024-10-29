@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,4 +29,13 @@ namespace MSS.WLIM.DataServices.Models
         public string? OtherRelevantDetails { get; set; }
 
     }
+
+    public class LostItemRequestPhoto
+    {
+        public string? Id { get; set; }
+
+       // [FileExtensions(Extensions = "png,jpg,jpeg", ErrorMessage = "Photo must be a .png, .jpg, or .jpeg file.")]
+        public IFormFile? ItemPhoto { get; set; }
+    }
+
 }
