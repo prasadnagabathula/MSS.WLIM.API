@@ -27,6 +27,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? ReferenceNumber { get; set; }
         public string? AdditionalInformation { get; set; }
         public string? OtherRelevantDetails { get; set; }
+        public string? ClaimId { get; set; }
 
     }
 
@@ -36,6 +37,14 @@ namespace MSS.WLIM.DataServices.Models
 
        // [FileExtensions(Extensions = "png,jpg,jpeg", ErrorMessage = "Photo must be a .png, .jpg, or .jpeg file.")]
         public IFormFile? ItemPhoto { get; set; }
+
     }
 
+    public class LostItemRequestsViewModel
+    {
+        public string? Description { get; set; }
+        public string? ClaimId { get; set; }
+
+    }
+    
 }
