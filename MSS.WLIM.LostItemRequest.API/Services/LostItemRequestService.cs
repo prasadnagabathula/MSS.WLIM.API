@@ -97,7 +97,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
         public async Task<LostItemRequests> Add(LostItemRequests _object)
         {
-            //var employeeName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
+            var employeeName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
             var lostItemRequest = new LostItemRequests
             {
                 Description = _object.Description,
@@ -118,7 +118,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 AdditionalInformation = _object.AdditionalInformation,
                 OtherRelevantDetails = _object.OtherRelevantDetails,
                 IsActive = _object.IsActive,
-                CreatedBy = _object.CreatedBy,
+                CreatedBy = employeeName,
                 CreatedDate = DateTime.Now
             };
 
@@ -161,7 +161,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
         public async Task<LostItemRequests> Update(LostItemRequests _object)
         {
 
-            //var userName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
+            var userName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
             var lostItemRequest = await _context.WHTblLostItemRequest.FindAsync(_object.Id);
 
             if (lostItemRequest == null)
@@ -185,7 +185,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             lostItemRequest.AdditionalInformation = _object.AdditionalInformation;
             lostItemRequest.OtherRelevantDetails = _object.OtherRelevantDetails;
             lostItemRequest.IsActive = _object.IsActive;
-            lostItemRequest.UpdatedBy = _object.UpdatedBy;
+            lostItemRequest.UpdatedBy = userName;
             lostItemRequest.UpdatedDate = DateTime.Now;
 
             _context.Entry(lostItemRequest).State = EntityState.Modified;
