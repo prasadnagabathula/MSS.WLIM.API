@@ -114,7 +114,7 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
         [HttpPost]
         //[Authorize(Roles = "Admin")]
         [Route("Claim")]
-        public async Task<ActionResult<LostItemRequests>> Claim([FromBody] LostItemRequestsViewModel item)
+        public async Task<IActionResult> Claim([FromBody] LostItemRequestsViewModel item)
         {
             if (!ModelState.IsValid)
             {
@@ -128,29 +128,11 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             {
                 var lostItemRequest = new LostItemRequests
                 {
-                    Description = item.Description,
-                    //Color = createDto.Color,
-                    //Size = createDto.Size,
-                    //Brand = createDto.Brand,
-                    //Model = createDto.Model,
-                    //DistinguishingFeatures = createDto.DistinguishingFeatures,
-                    //ItemCategory = createDto.ItemCategory,
-                    //SerialNumber = createDto.SerialNumber,
-                    //DateTimeWhenLost = createDto.DateTimeWhenLost,
-                    //Location = createDto.Location,
-                    //ItemValue = createDto.ItemValue,
-                    //ItemPhoto = createDto.ItemPhoto,
-                    //ProofofOwnership = createDto.ProofofOwnership,
-                    //HowtheItemLost = createDto.HowtheItemLost,
-                    //ReferenceNumber = createDto.ReferenceNumber,
-                    //AdditionalInformation = createDto.AdditionalInformation,
-                    //OtherRelevantDetails = createDto.OtherRelevantDetails
-                    CreatedBy = "Prasad",
+                    Description = item.Description,                                      
                     ClaimId = item.ClaimId
                 };
-                //var departmentDto = new DepartmentDTO { Name = createDto.Name }; // Create a new DTO instance for the service
                 var created = await _Service.Claim(item);
-                return CreatedAtAction(nameof(GetAll), new { id = created.Id }, created);
+                return Ok(new { Message = "Items is claimed." });
             }
             catch (KeyNotFoundException ex)
             {

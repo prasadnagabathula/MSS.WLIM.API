@@ -136,7 +136,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             {
                 Description = _object.Description,               
                 IsActive = true,
-                CreatedBy = "Prasad",
+                CreatedBy = employeeName,
                 CreatedDate = DateTime.Now,
                 ClaimId = _object.ClaimId
             };
