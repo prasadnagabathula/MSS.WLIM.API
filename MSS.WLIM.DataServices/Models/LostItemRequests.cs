@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,9 @@ namespace MSS.WLIM.DataServices.Models
         public string? ReferenceNumber { get; set; }
         public string? AdditionalInformation { get; set; }
         public string? OtherRelevantDetails { get; set; }
+        public string? ClaimId { get; set; }
+        [ForeignKey("ClaimId")]
+        public WareHouseItem WareHouseItem { get; set; }
 
     }
 

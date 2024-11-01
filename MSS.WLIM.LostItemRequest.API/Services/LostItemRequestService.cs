@@ -22,7 +22,9 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
         public async Task<IEnumerable<LostItemRequests>> GetAll()
         {
-            var lostItemRequests = await _context.WHTblLostItemRequest.ToListAsync();
+            var lostItemRequests = await _context.WHTblLostItemRequest
+                .Include(t => t.WareHouseItem)
+                .ToListAsync();
 
             var LostItemRequestsDto = new List<LostItemRequests>();
 
@@ -42,7 +44,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                     DateTimeWhenLost = d.DateTimeWhenLost,
                     Location = d.Location,
                     ItemValue = d.ItemValue,
-                    ItemPhoto = d.ItemPhoto,
+                    ItemPhoto = d.WareHouseItem?.FilePath,
                     ProofofOwnership = d.ProofofOwnership,
                     HowtheItemLost = d.HowtheItemLost,
                     ReferenceNumber = d.ReferenceNumber,
