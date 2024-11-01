@@ -87,7 +87,7 @@ namespace MSS.WLIM.IdentifiedItem.API.Controllers
                     Photos = item.Id + "_" + file.FileName,
                     Category = item.Category,
                     Tags = String.Join(",", item.Tags),
-                    Itemobject = String.Join(",", item.Itemobject)
+                    Comments = String.Join(",", item.Comments)
 
                 };
 

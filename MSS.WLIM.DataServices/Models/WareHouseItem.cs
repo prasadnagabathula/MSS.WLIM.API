@@ -19,7 +19,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? Status { get; set; }
         public string? Tags { get; set; }
         public string? ItemDescription { get; set; }
-        public string? ItemObject {  get; set; }
+        public string? Comments {  get; set; }
         public ICollection<LostItemRequests> LostItemRequests { get; set; }
     }
 }

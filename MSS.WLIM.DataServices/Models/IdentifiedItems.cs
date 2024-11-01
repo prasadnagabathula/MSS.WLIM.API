@@ -26,7 +26,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? IdentifiedLocation { get; set; }
         public string? Category { get; set; }
         public string? Tags { get; set; }
-        public string? Itemobject { get; set; }
+        public string? Comments { get; set; }
 
         public bool IsActive { get; set; } = true;
         public string CreatedBy { get; set; } = "SYSTEM";
