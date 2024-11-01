@@ -17,10 +17,11 @@ namespace MSS.WLIM.IdentifiedItem.API.Controllers
         private readonly ILogger<IdentifiedItemController> _logger;
 
 
-        public IdentifiedItemController(IIdentifiedItemServices service, ILogger<IdentifiedItemController> logger)
+        public IdentifiedItemController(IIdentifiedItemServices service, ILogger<IdentifiedItemController> logger,DataBaseContext context)
         {
             _IdentifiedServices = service;
             _logger = logger;
+            _context = context;
         }
 
         // GET: api/<IdentifiedItemsController>

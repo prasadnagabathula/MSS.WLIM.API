@@ -40,6 +40,14 @@ namespace MSS.WLIM.DataServices.Models
 
        // [FileExtensions(Extensions = "png,jpg,jpeg", ErrorMessage = "Photo must be a .png, .jpg, or .jpeg file.")]
         public IFormFile? ItemPhoto { get; set; }
+
     }
 
+    public class LostItemRequestsViewModel
+    {
+        public string? Description { get; set; }
+        public string? ClaimId { get; set; }
+
+    }
+    
 }

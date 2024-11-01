@@ -10,5 +10,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
         Task<string> UploadPhotoAsync(LostItemRequestPhoto lostItemRequestPhoto);
         public Task<LostItemRequests> Update(LostItemRequests _object);
         public Task<bool> Delete(string id);
+
+        public Task<LostItemRequests> Claim(LostItemRequestsViewModel _object);
     }
 }

@@ -131,6 +131,25 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             return _object;
         }
 
+        public async Task<LostItemRequests> Claim(LostItemRequestsViewModel _object)
+        {
+            var employeeName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
+            var lostItemRequest = new LostItemRequests
+            {
+                Description = _object.Description,               
+                IsActive = true,
+                CreatedBy = employeeName,
+                CreatedDate = DateTime.Now,
+                ClaimId = _object.ClaimId
+            };
+
+           _context.WHTblLostItemRequest.Add(lostItemRequest);
+            await _context.SaveChangesAsync();
+
+            return lostItemRequest;
+        }
+
+
         public async Task<string> UploadPhotoAsync(LostItemRequestPhoto lostItemRequestPhoto)
         {
             string fileName = ""; // Variable to hold the file name

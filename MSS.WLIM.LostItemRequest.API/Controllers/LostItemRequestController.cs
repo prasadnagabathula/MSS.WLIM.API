@@ -111,6 +111,36 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             }
         }
 
+        [HttpPost]
+        //[Authorize(Roles = "Admin")]
+        [Route("Claim")]
+        public async Task<IActionResult> Claim([FromBody] LostItemRequestsViewModel item)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Invalid model state for creating LostItemRequests");
+                return BadRequest(ModelState);
+            }
+
+            _logger.LogInformation("Creating a new LostItemRequests");
+
+            try
+            {
+                var lostItemRequest = new LostItemRequests
+                {
+                    Description = item.Description,                                      
+                    ClaimId = item.ClaimId
+                };
+                var created = await _Service.Claim(item);
+                return Ok(new { Message = "Items is claimed." });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpPost("itemPhoto")]
         //[Authorize(Roles = "Admin, Director, Project Manager")]
         public async Task<IActionResult> UploadPhoto(LostItemRequestPhoto lostItemRequestPhoto)
