@@ -19,6 +19,7 @@ namespace MSS.WLIM.DataServices.Data
         public DbSet<Users> WHTblUser { get; set; }
         public DbSet<LostItemRequests> WHTblLostItemRequest { get; set; }
         public DbSet<IdentifiedItems> WHTblIdentifiedItems { get; set; }
+        public DbSet<WareHouseItem> WareHouseItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +44,11 @@ namespace MSS.WLIM.DataServices.Data
             .HasOne(e => e.ReportingToUser)
             .WithMany(d => d.Subordinates)
             .HasForeignKey(e => e.ReportingTo);
+
+            modelBuilder.Entity<LostItemRequests>()
+            .HasOne(e => e.WareHouseItem)
+            .WithMany(d => d.LostItemRequests)
+            .HasForeignKey(e => e.ClaimId);
 
         }
     }
