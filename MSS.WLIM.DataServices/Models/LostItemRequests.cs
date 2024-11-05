@@ -30,7 +30,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? OtherRelevantDetails { get; set; }
         public string? ClaimId { get; set; }
         [ForeignKey("ClaimId")]
-        public WareHouseItem WareHouseItem { get; set; }
+        public WareHouseItem? WareHouseItem { get; set; }
 
     }
 
