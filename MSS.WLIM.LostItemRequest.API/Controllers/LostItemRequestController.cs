@@ -218,5 +218,12 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("ClaimsCount")]
+        public async Task<IActionResult> ClaimCount()
+        {
+            _logger.LogInformation("Fetching Claim status count");
+            return Ok(await _Service.ClaimCount());
+        }
     }
 }

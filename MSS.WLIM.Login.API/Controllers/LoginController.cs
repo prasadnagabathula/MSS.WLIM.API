@@ -8,7 +8,7 @@ namespace MSS.WLIM.Login.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
-    {
+    {   
         private readonly TokenGeneration _tokenGeneration;
         public LoginController(TokenGeneration tokenGeneration)
         {
@@ -36,7 +36,7 @@ namespace MSS.WLIM.Login.API.Controllers
                 return Ok(new
                 {
                     Token = authResponse.Token,
-                    Name = authResponse.Username,
+                    Name = authResponse.Name,
                     Role = authResponse.Role
                 });
             }

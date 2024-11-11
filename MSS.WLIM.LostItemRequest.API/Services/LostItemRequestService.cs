@@ -244,5 +244,16 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             await _repository.Update(existingData); // Save changes
             return true;
         }
+
+        public async Task<LostItemRequestClamCount> ClaimCount()
+        {
+            return new LostItemRequestClamCount
+            {
+                ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync(),
+                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync(),
+                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync(),
+                IdentifiedItemsCount = await _context.WHTblIdentifiedItems.CountAsync(),
+            };
+        }
     }
 }

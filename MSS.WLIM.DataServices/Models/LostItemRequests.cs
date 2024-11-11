@@ -65,5 +65,14 @@ namespace MSS.WLIM.DataServices.Models
         public string? ClaimId { get; set; }
 
     }
-    
+
+    public class LostItemRequestClamCount
+    {
+        public int ClaimRequestCount { get; set; } = 0;
+        public int PendingRequestCount { get; set; } = 0;
+        public int SuccessRequestCount { get; set; } = 0;
+        public int IdentifiedItemsCount { get; set; } = 0;
+
+    }
+
 }

@@ -12,5 +12,6 @@ namespace MSS.WLIM.LostItemRequest.API.Services
         public Task<bool> Delete(string id);
 
         public Task<LostItemRequests> Claim(LostItemRequestsViewModel _object);
+        public Task<LostItemRequestClamCount> ClaimCount();
     }
 }
