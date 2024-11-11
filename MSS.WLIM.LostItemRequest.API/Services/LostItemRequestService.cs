@@ -136,7 +136,22 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             var employeeName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
             var lostItemRequest = new LostItemRequests
             {
-                Description = _object.Description,               
+                Description = _object.Description,
+                Color = _object.Color,
+                Size = _object.Size,
+                Model = _object.Model,
+                Brand = _object.Brand,
+                DistinguishingFeatures = _object.DistinguishingFeatures,
+                ItemCategory = _object.ItemCategory,
+                SerialNumber = _object.SerialNumber,
+                DateTimeWhenLost = _object.DateTimeWhenLost,
+                Location = _object.Location,
+                ItemValue = _object.ItemValue,
+                ProofofOwnership = _object.ProofofOwnership,
+                HowtheItemLost = _object.HowtheItemLost,
+                ReferenceNumber = _object.ReferenceNumber,
+                AdditionalInformation = _object.AdditionalInformation,
+                OtherRelevantDetails = _object.OtherRelevantDetails,
                 IsActive = true,
                 CreatedBy = employeeName,
                 CreatedDate = DateTime.Now,

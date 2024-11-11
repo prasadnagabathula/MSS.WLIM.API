@@ -128,7 +128,21 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             {
                 var lostItemRequest = new LostItemRequests
                 {
-                    Description = item.Description,                                      
+                    Description = item.Description,
+                    Color = item.Color,
+                    Size = item.Size,
+                    Brand = item.Brand,
+                    Model = item.Model,
+                    DistinguishingFeatures = item.DistinguishingFeatures,
+                    ItemCategory = item.ItemCategory,
+                    SerialNumber = item.SerialNumber,
+                    DateTimeWhenLost = item.DateTimeWhenLost,
+                    Location = item.Location,
+                    ItemValue = item.ItemValue,
+                    ProofofOwnership = item.ProofofOwnership,
+                    HowtheItemLost = item.HowtheItemLost,
+                    ReferenceNumber = item.ReferenceNumber,
+                    OtherRelevantDetails = item.OtherRelevantDetails,
                     ClaimId = item.ClaimId
                 };
                 var created = await _Service.Claim(item);
