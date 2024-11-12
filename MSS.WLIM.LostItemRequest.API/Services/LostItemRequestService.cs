@@ -252,7 +252,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync(),
                 PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync(),
                 SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync(),
-                IdentifiedItemsCount = await _context.WHTblIdentifiedItems.CountAsync(),
+                IdentifiedItemsCount = await _context.WareHouseItems.CountAsync(),
             };
         }
     }
