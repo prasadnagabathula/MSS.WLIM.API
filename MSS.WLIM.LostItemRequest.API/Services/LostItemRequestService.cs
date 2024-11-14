@@ -4,6 +4,7 @@ using MSS.WLIM.DataServices.Data;
 using MSS.WLIM.DataServices.Models;
 using MSS.WLIM.DataServices.Repositories;
 using System.Drawing;
+using System.Linq;
 
 namespace MSS.WLIM.LostItemRequest.API.Services
 {
@@ -245,14 +246,99 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             return true;
         }
 
-        public async Task<LostItemRequestClamCount> ClaimCount()
+        public async Task<DashboardData> ClaimCount()
         {
-            return new LostItemRequestClamCount
+                // Fetching all required data from the database
+                var locations = await _context.WareHouseItems
+                                                  .Where(r => r.WarehouseLocation != null)
+                                        .Select(r => r.WarehouseLocation)
+                                        .Distinct()
+                                        .ToListAsync();
+
+            Dictionary<string, int[]> locationData = new Dictionary<string, int[]>();
+
+            foreach(string location in  locations)
             {
-                ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync(),
-                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync(),
-                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync(),
-                IdentifiedItemsCount = await _context.WareHouseItems.CountAsync(),
+                var data = await _context.WareHouseItems.Where(w => w.WarehouseLocation == location)
+                    .Select(d => EF.Functions.DateDiffDay(d.CreatedDate, d.UpdatedDate ?? DateTime.Now)).ToListAsync();
+
+                int[] a = [0, 0, 0, 0, 0];
+
+                foreach(int i in data)
+                {
+                    if(i <= 7)
+                    {
+                        a[0]++;
+                    }
+                    else if(i <= 30)
+                    {
+                        a[1]++;
+                    }
+                    else if(i <= 180)
+                    {
+                        a[2]++;
+                    }
+                    else if(i <= 365)
+                    {
+                        a[3]++;
+                    }
+                    else
+                    {
+                        a[4]++;
+                    }
+                }
+                
+                locationData.Add(location, a);
+            }
+
+
+
+            //////////////////////////////////////////////////////////////
+
+
+
+            /* var claimRequests = await _context.WHTblLostItemRequest
+                                                   .Select(r => new
+                                                   {
+                                                       r.CreatedDate,
+                                                       r.UpdatedDate,
+                                                       r.Location,
+                                                       r.IsActive
+                                                   })
+                                                   .ToListAsync(); // Get the list of requests
+
+                 // Count the number of claim requests
+                 var claimRequestCount = claimRequests.Count;
+
+             // Count the pending requests (IsActive == true)
+             var pendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync();
+
+             // Count the successful requests (IsActive == false)
+             var successRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync();
+
+                 // Count the number of identified items
+                 var identifiedItemsCount = await _context.WareHouseItems.CountAsync();
+
+                 // Returning the final counts in the LostItemRequestClamCount object
+                 return new LostItemRequestClamCount
+                 {
+                     ClaimRequestCount = claimRequestCount,
+                     PendingRequestCount = pendingRequestCount,
+                     SuccessRequestCount = successRequestCount,
+                     IdentifiedItemsCount = identifiedItemsCount
+                 };*/
+
+
+            return new DashboardData
+            {
+                data = locationData,
+                lostItemRequestClaimCount = new LostItemRequestClaimCount
+                {
+                    ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync(),
+                    PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync(),
+                    SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync(),
+                    IdentifiedItemsCount = await _context.WareHouseItems.CountAsync(),
+                }
             };
         }
     }

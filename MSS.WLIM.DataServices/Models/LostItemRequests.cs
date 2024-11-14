@@ -66,13 +66,22 @@ namespace MSS.WLIM.DataServices.Models
 
     }
 
-    public class LostItemRequestClamCount
+    public class DashboardData
+    {
+        public Dictionary<string, int[]> data { get; set; } = new Dictionary<string, int[]>();
+        public LostItemRequestClaimCount lostItemRequestClaimCount { get; set; } = new LostItemRequestClaimCount();
+    }
+
+    public class LostItemRequestClaimCount
     {
         public int ClaimRequestCount { get; set; } = 0;
         public int PendingRequestCount { get; set; } = 0;
         public int SuccessRequestCount { get; set; } = 0;
-        public int IdentifiedItemsCount { get; set; } = 0;
-
+        public int IdentifiedItemsCount { get; set; } = 0;         
+    }
+    public class Age
+    {
+        public int? age { get; set; }
     }
 
 }
