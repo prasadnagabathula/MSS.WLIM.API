@@ -292,41 +292,19 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             }
 
 
+            var categories = await _context.WareHouseItems.Where(r => r.Category != null)
+                                        .Select(r => r.Category)
+                                        .Distinct()
+                                        .ToListAsync();
 
-            //////////////////////////////////////////////////////////////
+            Dictionary<string, int> categoryData = new Dictionary<string, int>();
 
-
-
-            /* var claimRequests = await _context.WHTblLostItemRequest
-                                                   .Select(r => new
-                                                   {
-                                                       r.CreatedDate,
-                                                       r.UpdatedDate,
-                                                       r.Location,
-                                                       r.IsActive
-                                                   })
-                                                   .ToListAsync(); // Get the list of requests
-
-                 // Count the number of claim requests
-                 var claimRequestCount = claimRequests.Count;
-
-             // Count the pending requests (IsActive == true)
-             var pendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync();
-
-             // Count the successful requests (IsActive == false)
-             var successRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync();
-
-                 // Count the number of identified items
-                 var identifiedItemsCount = await _context.WareHouseItems.CountAsync();
-
-                 // Returning the final counts in the LostItemRequestClamCount object
-                 return new LostItemRequestClamCount
-                 {
-                     ClaimRequestCount = claimRequestCount,
-                     PendingRequestCount = pendingRequestCount,
-                     SuccessRequestCount = successRequestCount,
-                     IdentifiedItemsCount = identifiedItemsCount
-                 };*/
+            foreach (string category in categories)
+            {
+                var data = await _context.WareHouseItems.Where(w => w.Category == category).CountAsync();
+                categoryData.Add(category, data);
+                Console.WriteLine(category + "  " + data);
+            }
 
 
             return new DashboardData
@@ -338,7 +316,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                     PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync(),
                     SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync(),
                     IdentifiedItemsCount = await _context.WareHouseItems.CountAsync(),
-                }
+                },
+                category = categoryData
             };
         }
     }

@@ -70,6 +70,7 @@ namespace MSS.WLIM.DataServices.Models
     {
         public Dictionary<string, int[]> data { get; set; } = new Dictionary<string, int[]>();
         public LostItemRequestClaimCount lostItemRequestClaimCount { get; set; } = new LostItemRequestClaimCount();
+        public Dictionary<string, int> category { get; set; } = new Dictionary<string, int>();
     }
 
     public class LostItemRequestClaimCount

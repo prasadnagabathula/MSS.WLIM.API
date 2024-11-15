@@ -220,9 +220,9 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
         }
 
         [HttpGet("DashboardData")]
-        public async Task<IActionResult> ClaimCount()
+        public async Task<IActionResult> DashboardData()
         {
-            _logger.LogInformation("Fetching Claim status count");
+            _logger.LogInformation("Fetching Dashboard Data");
             return Ok(await _Service.ClaimCount());
         }
     }
