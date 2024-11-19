@@ -27,6 +27,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? HowtheItemLost { get; set; }
         public string? ReferenceNumber { get; set; }
         public string? AdditionalInformation { get; set; }
+        public string? Status { get; set; }
         public string? OtherRelevantDetails { get; set; }
         public string? ClaimId { get; set; }
         [ForeignKey("ClaimId")]
@@ -38,7 +39,7 @@ namespace MSS.WLIM.DataServices.Models
     {
         //public string? Id { get; set; }
 
-       // [FileExtensions(Extensions = "png,jpg,jpeg", ErrorMessage = "Photo must be a .png, .jpg, or .jpeg file.")]
+        // [FileExtensions(Extensions = "png,jpg,jpeg", ErrorMessage = "Photo must be a .png, .jpg, or .jpeg file.")]
         public IFormFile? ItemPhoto { get; set; }
 
     }
@@ -78,7 +79,7 @@ namespace MSS.WLIM.DataServices.Models
         public int ClaimRequestCount { get; set; } = 0;
         public int PendingRequestCount { get; set; } = 0;
         public int SuccessRequestCount { get; set; } = 0;
-        public int IdentifiedItemsCount { get; set; } = 0;         
+        public int IdentifiedItemsCount { get; set; } = 0;
     }
     public class Age
     {

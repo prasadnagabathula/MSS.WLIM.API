@@ -222,6 +222,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             lostItemRequest.AdditionalInformation = _object.AdditionalInformation;
             //lostItemRequest.OtherRelevantDetails = _object.OtherRelevantDetails;
             lostItemRequest.IsActive = _object.IsActive;
+            lostItemRequest.Status=_object.Status;
             lostItemRequest.UpdatedBy = userName;
             lostItemRequest.UpdatedDate = DateTime.Now;
 
