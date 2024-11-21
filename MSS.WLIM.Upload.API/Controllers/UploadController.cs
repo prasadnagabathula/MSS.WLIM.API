@@ -15,11 +15,13 @@ namespace MSS.WLIM.Upload.API.Controllers
     {
         private readonly IWareHouseItemService _warehouseItemService;
         private readonly DataBaseContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UploadController(IWareHouseItemService wareHouseItemService, DataBaseContext context)
+        public UploadController(IWareHouseItemService wareHouseItemService, DataBaseContext context, IHttpContextAccessor httpContextAccessor)
         {
             _warehouseItemService = wareHouseItemService;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpPost]
@@ -51,12 +53,12 @@ namespace MSS.WLIM.Upload.API.Controllers
 
             try
             {
-
+                var SessionUsername = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
                 var warehouseItem = new WareHouseItem()
                 {
                     Id = item.Id,
                     Category = item.Category == "null" || string.IsNullOrEmpty(item.Category) ? "Unknown" : item.Category,
-                    CreatedBy = "System",
+                    CreatedBy = SessionUsername,
                     CreatedDate = DateTime.Now,
                     FilePath = item.Id + "_" + file.FileName,
                     WarehouseLocation = item.WarehouseLocation,
