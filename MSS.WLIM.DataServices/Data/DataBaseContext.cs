@@ -20,6 +20,7 @@ namespace MSS.WLIM.DataServices.Data
         public DbSet<LostItemRequests> WHTblLostItemRequest { get; set; }
         public DbSet<IdentifiedItems> WHTblIdentifiedItems { get; set; }
         public DbSet<WareHouseItem> WareHouseItems { get; set; }
+        public DbSet<WHLocation> WHLocation { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

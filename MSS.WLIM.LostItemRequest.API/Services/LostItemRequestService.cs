@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using MSS.WLIM.DataServices.Data;
 using MSS.WLIM.DataServices.Models;
 using MSS.WLIM.DataServices.Repositories;
+using Serilog;
 using System.Drawing;
 using System.Linq;
 
@@ -247,39 +248,93 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             return true;
         }
 
-        public async Task<DashboardData> ClaimCount()
+        public async Task<DashboardData> ClaimCount(string location)
         {
-                // Fetching all required data from the database
-                var locations = await _context.WareHouseItems
-                                                  .Where(r => r.WarehouseLocation != null)
-                                        .Select(r => r.WarehouseLocation)
-                                        .Distinct()
-                                        .ToListAsync();
-
             Dictionary<string, int[]> locationData = new Dictionary<string, int[]>();
+            Dictionary<string, int> categoryData = new Dictionary<string, int>();
+            int ClaimRequestCount = 0;
+            int PendingRequestCount = 0;
+            int SuccessRequestCount = 0;
+            int IdentifiedItemsCount = 0;
+            if (location == "All")
+            {
+                var locations = await _context.WareHouseItems.Where(r => r.WarehouseLocation != null)
+                                       .Select(r => r.WarehouseLocation)
+                                       .Distinct()
+                                       .ToListAsync();
+                foreach (string loc in locations)
+                {
+                    var data = await _context.WareHouseItems.Where(w => w.WarehouseLocation == loc)
+                        .Select(d => EF.Functions.DateDiffDay(d.CreatedDate, d.UpdatedDate ?? DateTime.Now)).ToListAsync();
 
-            foreach(string location in  locations)
+                    int[] a = [0, 0, 0, 0, 0];
+
+                    foreach (int i in data)
+                    {
+                        if (i <= 7)
+                        {
+                            a[0]++;
+                        }
+                        else if (i <= 30)
+                        {
+                            a[1]++;
+                        }
+                        else if (i <= 180)
+                        {
+                            a[2]++;
+                        }
+                        else if (i <= 365)
+                        {
+                            a[3]++;
+                        }
+                        else
+                        {
+                            a[4]++;
+                        }
+                    }
+
+                    locationData.Add(loc, a);
+                }
+
+
+                var categories = await _context.WareHouseItems.Where(r => r.Category != null)
+                                            .Select(r => r.Category)
+                                            .Distinct()
+                                            .ToListAsync();
+
+                foreach (string category in categories)
+                {
+                    categoryData.Add(category, await _context.WareHouseItems.Where(w => w.Category == category).CountAsync());
+                }
+
+                ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync();
+                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync();
+                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync();
+                IdentifiedItemsCount = await _context.WareHouseItems.CountAsync();
+
+            }
+            else if(await  _context.WareHouseItems.Where(w => w.WarehouseLocation == location).CountAsync() > 0)
             {
                 var data = await _context.WareHouseItems.Where(w => w.WarehouseLocation == location)
                     .Select(d => EF.Functions.DateDiffDay(d.CreatedDate, d.UpdatedDate ?? DateTime.Now)).ToListAsync();
 
                 int[] a = [0, 0, 0, 0, 0];
 
-                foreach(int i in data)
+                foreach (int i in data)
                 {
-                    if(i <= 7)
+                    if (i <= 7)
                     {
                         a[0]++;
                     }
-                    else if(i <= 30)
+                    else if (i <= 30)
                     {
                         a[1]++;
                     }
-                    else if(i <= 180)
+                    else if (i <= 180)
                     {
                         a[2]++;
                     }
-                    else if(i <= 365)
+                    else if (i <= 365)
                     {
                         a[3]++;
                     }
@@ -288,38 +343,40 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                         a[4]++;
                     }
                 }
-                
                 locationData.Add(location, a);
+                var categories = await _context.WareHouseItems.Where(r => r.Category != null && r.WarehouseLocation == location)
+                                            .Select(r => r.Category)
+                                            .Distinct()
+                                            .ToListAsync();
+
+                foreach (string category in categories)
+                {
+                    categoryData.Add(category, await _context.WareHouseItems.Where(w => w.Category == category && w.WarehouseLocation == location).CountAsync());
+                }
+
+                ClaimRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Location == location).CountAsync();
+                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true && r.Location == location).CountAsync();
+                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false && r.Location == location).CountAsync();
+                IdentifiedItemsCount = await _context.WareHouseItems.Where(r => r.WarehouseLocation == location).CountAsync();
             }
-
-
-            var categories = await _context.WareHouseItems.Where(r => r.Category != null)
-                                        .Select(r => r.Category)
-                                        .Distinct()
-                                        .ToListAsync();
-
-            Dictionary<string, int> categoryData = new Dictionary<string, int>();
-
-            foreach (string category in categories)
-            {
-                var data = await _context.WareHouseItems.Where(w => w.Category == category).CountAsync();
-                categoryData.Add(category, data);
-                Console.WriteLine(category + "  " + data);
-            }
-
 
             return new DashboardData
             {
                 data = locationData,
                 lostItemRequestClaimCount = new LostItemRequestClaimCount
                 {
-                    ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync(),
-                    PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync(),
-                    SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync(),
-                    IdentifiedItemsCount = await _context.WareHouseItems.CountAsync(),
+                    ClaimRequestCount = ClaimRequestCount,
+                    PendingRequestCount = PendingRequestCount,
+                    SuccessRequestCount = SuccessRequestCount,
+                    IdentifiedItemsCount = IdentifiedItemsCount,
                 },
                 category = categoryData
             };
+        }
+
+        public async Task<IEnumerable<WHLocation>> GetLocations()
+        {
+            return await _context.WHLocation.ToListAsync();
         }
     }
 }

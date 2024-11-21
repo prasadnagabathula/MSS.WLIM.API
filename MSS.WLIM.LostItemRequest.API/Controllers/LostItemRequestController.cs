@@ -219,11 +219,17 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             return NoContent();
         }
 
-        [HttpGet("DashboardData")]
-        public async Task<IActionResult> DashboardData()
+        [HttpGet("Locations")]
+        public async Task<IActionResult> GetLocations()
+        {
+            return Ok(await _Service.GetLocations());
+        }
+
+        [HttpGet("DashboardData/{location}")]
+        public async Task<IActionResult> DashboardData(string location)
         {
             _logger.LogInformation("Fetching Dashboard Data");
-            return Ok(await _Service.ClaimCount());
+            return Ok(await _Service.ClaimCount(location));
         }
     }
 }
