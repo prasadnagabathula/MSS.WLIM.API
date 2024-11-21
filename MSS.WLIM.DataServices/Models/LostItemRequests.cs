@@ -85,5 +85,12 @@ namespace MSS.WLIM.DataServices.Models
     {
         public int? age { get; set; }
     }
+    public class UserDashboardData
+    {
+        public int ClaimRequestCount { get; set; }
+        public int PendingRequestCount { get; set; }
+        public int ReturnedCount { get; set; }
+        public int TotalRequestCount { get; set; }
+    }
 
 }

@@ -378,5 +378,16 @@ namespace MSS.WLIM.LostItemRequest.API.Services
         {
             return await _context.WHLocation.ToListAsync();
         }
+
+        public async Task<UserDashboardData> UserCountsData(string user)
+        {
+            return new UserDashboardData
+            {
+                ClaimRequestCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && r.Status == "Claim").CountAsync(),
+                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && (r.Status == "Requested" || r.Status == "Approved")).CountAsync(),
+                ReturnedCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && r.Status == "Resolved").CountAsync(),
+                TotalRequestCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user).CountAsync()
+            };
+        }
     }
 }

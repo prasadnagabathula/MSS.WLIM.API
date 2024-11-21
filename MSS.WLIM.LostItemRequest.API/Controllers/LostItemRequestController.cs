@@ -231,5 +231,12 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             _logger.LogInformation("Fetching Dashboard Data");
             return Ok(await _Service.ClaimCount(location));
         }
+
+        [HttpGet("UserDashboardData{user}")]
+        public async Task<IActionResult> UserCountsData(string user)
+        {
+            _logger.LogInformation("Fetching Dashboard Data");
+            return Ok(await _Service.UserCountsData(user));
+        }
     }
 }
