@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +22,18 @@ namespace MSS.WLIM.DataServices.Models
         public string? ItemDescription { get; set; }
         public string? Comments {  get; set; }
         public ICollection<LostItemRequests> LostItemRequests { get; set; }
+    }
+
+    public class WareHouseItemViewModel
+    {
+        [Key]
+        public string Id { get; set; } = Guid.NewGuid().ToString();
+        public string? Category { get; set; }
+        public string? Tags { get; set; }
+        public string? ItemDescription { get; set; }
+        public string? WarehouseLocation { get; set; }
+        public string? Comments { get; set; }
+
+
     }
 }
