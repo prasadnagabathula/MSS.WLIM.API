@@ -27,3 +27,6 @@
 /MSS.WLIM.User.API/obj/Debug/net8.0/MSS.WLIM.User.API.sourcelink.json
 /MSS.WLIM.IdentifiedItems.API/LOG
 /MSS.WLIM.IdentifiedItems.API/uploads
+/MSS.WLIM.Upload.API/obj
+/MSS.WLIM.Upload.API/bin/Debug/net8.0
+/MSS.WLIM.Login.API/obj/MSS.WLIM.Login.API.csproj.nuget.dgspec.json
