@@ -24,7 +24,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
         public async Task<IEnumerable<LostItemRequests>> GetAll()
         {
-            var lostItemRequests = await _context.WHTblLostItemRequest
+            return await _context.WHTblLostItemRequest.ToListAsync();
+            /*var lostItemRequests = await _context.WHTblLostItemRequest
                 .Include(t => t.WareHouseItem)
                 .ToListAsync();
 
@@ -60,7 +61,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 });
             }
 
-            return LostItemRequestsDto;
+            return LostItemRequestsDto;*/
         }
 
         public async Task<LostItemRequests> Get(string id)
