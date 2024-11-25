@@ -24,8 +24,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
         public async Task<IEnumerable<LostItemRequests>> GetAll()
         {
-            return await _context.WHTblLostItemRequest.ToListAsync();
-            /*var lostItemRequests = await _context.WHTblLostItemRequest
+            //return await _context.WHTblLostItemRequest.ToListAsync();
+            var lostItemRequests = await _context.WHTblLostItemRequest
                 .Include(t => t.WareHouseItem)
                 .ToListAsync();
 
@@ -57,11 +57,12 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                     CreatedBy = d.CreatedBy,
                     CreatedDate = d.CreatedDate,
                     UpdatedBy = d.UpdatedBy,
-                    UpdatedDate = d.UpdatedDate
+                    UpdatedDate = d.UpdatedDate,
+                    Status = d.Status
                 });
             }
 
-            return LostItemRequestsDto;*/
+            return LostItemRequestsDto;
         }
 
         public async Task<LostItemRequests> Get(string id)
@@ -96,7 +97,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 CreatedBy = lostItemRequest.CreatedBy,
                 CreatedDate = lostItemRequest.CreatedDate,
                 UpdatedBy = lostItemRequest.UpdatedBy,
-                UpdatedDate = lostItemRequest.UpdatedDate
+                UpdatedDate = lostItemRequest.UpdatedDate,
+                Status = lostItemRequest.Status
             };
         }
 
@@ -124,7 +126,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 OtherRelevantDetails = _object.OtherRelevantDetails,
                 IsActive = _object.IsActive,
                 CreatedBy = employeeName,
-                CreatedDate = DateTime.Now
+                CreatedDate = DateTime.Now,
+                Status = _object.Status
             };
 
             _context.WHTblLostItemRequest.Add(lostItemRequest);
@@ -158,7 +161,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 IsActive = true,
                 CreatedBy = employeeName,
                 CreatedDate = DateTime.Now,
-                ClaimId = _object.ClaimId
+                ClaimId = _object.ClaimId,
+                Status = "Claimed"                
             };
 
            _context.WHTblLostItemRequest.Add(lostItemRequest);
