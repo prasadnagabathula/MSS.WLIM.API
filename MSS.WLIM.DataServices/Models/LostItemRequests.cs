@@ -27,6 +27,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? HowtheItemLost { get; set; }
         public string? ReferenceNumber { get; set; }
         public string? AdditionalInformation { get; set; }
+        public string? Address { get; set; }
         public string? Status { get; set; }
         public string? OtherRelevantDetails { get; set; }
         public string? ClaimId { get; set; }
@@ -62,6 +63,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? HowtheItemLost { get; set; }
         public string? ReferenceNumber { get; set; }
         public string? AdditionalInformation { get; set; }
+        public string? Address { get; set; }
         public string? OtherRelevantDetails { get; set; }
         public string? ClaimId { get; set; }
 

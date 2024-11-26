@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MSS.WLIM.DataServices.Models
 {
-    public class WareHouseItem 
+    public class WareHouseItem
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
         public string? CreatedBy { get; set; }
@@ -20,7 +20,10 @@ namespace MSS.WLIM.DataServices.Models
         public string? Status { get; set; }
         public string? Tags { get; set; }
         public string? ItemDescription { get; set; }
-        public string? Comments {  get; set; }
+        public string? Comments { get; set; }
+        public string? IdentifiedLocation { get; set; }
+        public DateTime? IdentifiedDate { get; set; }
+
         public ICollection<LostItemRequests> LostItemRequests { get; set; }
     }
 
@@ -33,6 +36,8 @@ namespace MSS.WLIM.DataServices.Models
         public string? ItemDescription { get; set; }
         public string? WarehouseLocation { get; set; }
         public string? Comments { get; set; }
+        public string? IdentifiedLocation { get; set; }
+        public DateTime? IdentifiedDate { get; set; }
         public string? CreatedBy { get; set; }
 
 

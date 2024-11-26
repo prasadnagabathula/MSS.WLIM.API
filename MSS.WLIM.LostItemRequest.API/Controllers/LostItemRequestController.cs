@@ -98,6 +98,7 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
                     HowtheItemLost = createDto.HowtheItemLost,
                     ReferenceNumber = createDto.ReferenceNumber,
                     AdditionalInformation = createDto.AdditionalInformation,
+                    Address = createDto.Address,
                     OtherRelevantDetails = createDto.OtherRelevantDetails
                 };
                 //var departmentDto = new DepartmentDTO { Name = createDto.Name }; // Create a new DTO instance for the service
@@ -142,6 +143,7 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
                     ProofofOwnership = item.ProofofOwnership,
                     HowtheItemLost = item.HowtheItemLost,
                     ReferenceNumber = item.ReferenceNumber,
+                    Address = item.Address,
                     OtherRelevantDetails = item.OtherRelevantDetails,
                     ClaimId = item.ClaimId
                 };

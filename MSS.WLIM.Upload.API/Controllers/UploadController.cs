@@ -65,7 +65,9 @@ namespace MSS.WLIM.Upload.API.Controllers
                     Status = "Photo Captured",
                     Tags = String.Join(",", item.Tags),
                     ItemDescription = item.ItemDescription,
-                    Comments = item.Comments
+                    Comments = item.Comments,
+                    IdentifiedLocation = item.IdentifiedLocation,
+                    IdentifiedDate = item.IdentifiedDate
                 };
 
 

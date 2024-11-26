@@ -52,6 +52,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                     HowtheItemLost = d.HowtheItemLost,
                     ReferenceNumber = d.ReferenceNumber,
                     AdditionalInformation = d.AdditionalInformation,
+                    Address = d.Address,
                     OtherRelevantDetails = d.OtherRelevantDetails,
                     IsActive = d.IsActive,
                     CreatedBy = d.CreatedBy,
@@ -92,6 +93,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 HowtheItemLost = lostItemRequest.HowtheItemLost,
                 ReferenceNumber = lostItemRequest.ReferenceNumber,
                 AdditionalInformation = lostItemRequest.AdditionalInformation,
+                Address = lostItemRequest.Address,
                 OtherRelevantDetails = lostItemRequest.OtherRelevantDetails,
                 IsActive = lostItemRequest.IsActive,
                 CreatedBy = lostItemRequest.CreatedBy,
@@ -122,6 +124,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 ProofofOwnership = _object.ProofofOwnership,
                 HowtheItemLost = _object.HowtheItemLost,
                 ReferenceNumber = _object.ReferenceNumber,
+                Address = _object.Address,
                 AdditionalInformation = _object.AdditionalInformation,
                 OtherRelevantDetails = _object.OtherRelevantDetails,
                 IsActive = _object.IsActive,
@@ -157,15 +160,16 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 HowtheItemLost = _object.HowtheItemLost,
                 ReferenceNumber = _object.ReferenceNumber,
                 AdditionalInformation = _object.AdditionalInformation,
+                Address = _object.Address,
                 OtherRelevantDetails = _object.OtherRelevantDetails,
                 IsActive = true,
                 CreatedBy = employeeName,
                 CreatedDate = DateTime.Now,
                 ClaimId = _object.ClaimId,
-                Status = "Claimed"                
+                Status = "Claimed"
             };
 
-           _context.WHTblLostItemRequest.Add(lostItemRequest);
+            _context.WHTblLostItemRequest.Add(lostItemRequest);
             await _context.SaveChangesAsync();
 
             return lostItemRequest;
@@ -228,7 +232,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             lostItemRequest.AdditionalInformation = _object.AdditionalInformation;
             //lostItemRequest.OtherRelevantDetails = _object.OtherRelevantDetails;
             lostItemRequest.IsActive = _object.IsActive;
-            lostItemRequest.Status=_object.Status;
+            lostItemRequest.Status = _object.Status;
             lostItemRequest.UpdatedBy = userName;
             lostItemRequest.UpdatedDate = DateTime.Now;
 
@@ -318,7 +322,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 IdentifiedItemsCount = await _context.WareHouseItems.CountAsync();
 
             }
-            else if(await  _context.WareHouseItems.Where(w => w.WarehouseLocation == location).CountAsync() > 0)
+            else if (await _context.WareHouseItems.Where(w => w.WarehouseLocation == location).CountAsync() > 0)
             {
                 var data = await _context.WareHouseItems.Where(w => w.WarehouseLocation == location)
                     .Select(d => EF.Functions.DateDiffDay(d.CreatedDate, d.UpdatedDate ?? DateTime.Now)).ToListAsync();
