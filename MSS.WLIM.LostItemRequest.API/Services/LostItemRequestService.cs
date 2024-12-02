@@ -390,12 +390,15 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
         public async Task<UserDashboardData> UserCountsData(string user)
         {
+            var TotalClaimRequests = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user).CountAsync();
+            var ReturnedClaimsCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && (r.Status == "Approve" || r.Status == "Reject")).CountAsync();
+            var PendingRequestCount = TotalClaimRequests - ReturnedClaimsCount;
+
             return new UserDashboardData
             {
-                ClaimRequestCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && r.Status == "Claim").CountAsync(),
-                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && (r.Status == "Requested" || r.Status == "Approved")).CountAsync(),
-                ReturnedCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && r.Status == "Resolved").CountAsync(),
-                TotalRequestCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user).CountAsync()
+                ClaimRequestCount = TotalClaimRequests,
+                PendingRequestCount = PendingRequestCount,
+                ReturnedCount = ReturnedClaimsCount             
             };
         }
     }
