@@ -172,6 +172,18 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             _context.WHTblLostItemRequest.Add(lostItemRequest);
             await _context.SaveChangesAsync();
 
+            var userName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
+            var WareHouseItem = await _context.WareHouseItems.FindAsync(_object.ClaimId);
+            if (WareHouseItem == null)
+                throw new KeyNotFoundException("WareHouseItem not found");
+
+            WareHouseItem.Status = "Claimed";
+            //WareHouseItem.UpdatedBy = userName;
+            //WareHouseItem.UpdatedDate = DateTime.Now;
+
+            _context.Entry(WareHouseItem).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
             return lostItemRequest;
         }
 

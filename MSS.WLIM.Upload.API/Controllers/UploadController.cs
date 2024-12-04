@@ -132,7 +132,7 @@ namespace MSS.WLIM.Upload.API.Controllers
 
             //Get list of uploaded items based on matched category from the database
 
-            var wareHouseItems = _context.WareHouseItems.Where(x => (x.Category != null && item.Category != null && x.Category.Contains(item.Category)) || (x.ItemDescription != null && item.ItemDescription != null && x.ItemDescription.Contains(item.ItemDescription)))?.ToList();
+            var wareHouseItems = _context.WareHouseItems.Where(x => (x.Status != "Claimed" && x.Category != null && item.Category != null && x.Category.Contains(item.Category)) || (x.ItemDescription != null && item.ItemDescription != null && x.ItemDescription.Contains(item.ItemDescription)))?.ToList();
             wareHouseItems ??= new List<WareHouseItem>();
 
             // Split the incoming tags from React input into a list
@@ -141,7 +141,7 @@ namespace MSS.WLIM.Upload.API.Controllers
 
             // Retrieve items where Tags is not null
             var itemsWithTags = _context.WareHouseItems
-                                .Where(x => x.Tags != null)
+                                .Where(x => x.Tags != null && x.Status != "Claimed")
                                 .ToList();
 
             foreach (var tag in inputTags) // Loop through each tag from the React input
@@ -150,7 +150,8 @@ namespace MSS.WLIM.Upload.API.Controllers
                 var tagItems = itemsWithTags
                                 .Where(x => x.Tags
                                              .Split(',')
-                                             .Any(dbTag => dbTag.Trim().Contains(tag, StringComparison.OrdinalIgnoreCase)))
+                                             .Any(dbTag => dbTag.Trim().Contains(tag, StringComparison.OrdinalIgnoreCase))
+                                             && x.Status != "Claimed")
                                 .ToList();
 
                 foreach (var tagItem in tagItems)
@@ -181,7 +182,7 @@ namespace MSS.WLIM.Upload.API.Controllers
         {
             if (!string.IsNullOrEmpty(tag))
             {
-                var wareHouseItems = _context.WareHouseItems.Where(x => (x.Tags != null && x.Tags.Contains(tag)) || (x.Category != null && x.Category.Contains(tag)) || (x.ItemDescription != null && x.ItemDescription.Contains(tag)))?.ToList();
+                var wareHouseItems = _context.WareHouseItems.Where(x => (x.Status != "Claimed" && x.Tags != null && x.Tags.Contains(tag)) || (x.Category != null && x.Category.Contains(tag)) || (x.ItemDescription != null && x.ItemDescription.Contains(tag)))?.ToList();
                 return Ok(wareHouseItems);
             }
             return NotFound();
