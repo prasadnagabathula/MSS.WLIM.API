@@ -30,3 +30,5 @@
 /MSS.WLIM.Upload.API/obj
 /MSS.WLIM.Upload.API/bin/Debug/net8.0
 /MSS.WLIM.Login.API/obj/MSS.WLIM.Login.API.csproj.nuget.dgspec.json
+/MSS.WLIM.Upload.API/LOG
+/MSS.WLIM.Upload.API/search
