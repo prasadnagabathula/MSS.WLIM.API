@@ -53,6 +53,10 @@ namespace MSS.WLIM.Upload.API.Controllers
 
             try
             {
+                var maxSequenceNumber = _context.WareHouseItems
+                                     .Where(x => x.CreatedDate.Date == DateTime.Today)
+                                     .Max(x => (int?)x.QRSequenceNumber) ?? 0;
+
                 var SessionUsername = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
                 var warehouseItem = new WareHouseItem()
                 {
@@ -67,26 +71,29 @@ namespace MSS.WLIM.Upload.API.Controllers
                     ItemDescription = item.ItemDescription,
                     Comments = item.Comments,
                     IdentifiedLocation = item.IdentifiedLocation,
-                    IdentifiedDate = item.IdentifiedDate
+                    IdentifiedDate = item.IdentifiedDate,
+                    QRSequenceNumber = maxSequenceNumber+1,
+                    QRGeneratedAt = DateTime.Now
                 };
 
-
                 await _context.WareHouseItems.AddAsync(warehouseItem);
-
 
                 // Save the changes to the database
                 await _context.SaveChangesAsync();
 
+                return Ok(new { 
+                    FilePath = filePath, 
+                    ItemId = warehouseItem.Id,
+                    QRGeneratedAt = warehouseItem.QRGeneratedAt, 
+                    QRSequencNumber = warehouseItem.QRSequenceNumber, 
+                    Message = "File uploaded successfully." 
+                });
             }
             catch (Exception ex)
             {
                 // Log the exception if necessary and return an error response
                 return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-
-
-
-            return Ok(new { FilePath = filePath, Message = "File uploaded successfully." });
+            }            
         }
 
         [HttpPost]
