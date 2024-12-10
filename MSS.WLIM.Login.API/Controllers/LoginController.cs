@@ -37,7 +37,8 @@ namespace MSS.WLIM.Login.API.Controllers
                 {
                     Token = authResponse.Token,
                     Name = authResponse.Name,
-                    Role = authResponse.Role
+                    Role = authResponse.Role,
+                    Location = authResponse.Location,
                 });
             }
             else

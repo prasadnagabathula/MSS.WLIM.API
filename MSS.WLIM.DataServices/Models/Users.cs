@@ -50,6 +50,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? Role { get; set; }
         public string? ReportingTo { get; set; }
         public string? Profile { get; set; }
+        public string? Location { get; set; }
 
     }
     public class UserCreateDTO
@@ -86,6 +87,7 @@ namespace MSS.WLIM.DataServices.Models
         public string PhoneNo { get; set; }
         [Required]
         public string? Role { get; set; }
+        public string? Location { get; set; }
 
     }
     public class UserUpdateDTO : UserCreateDTO

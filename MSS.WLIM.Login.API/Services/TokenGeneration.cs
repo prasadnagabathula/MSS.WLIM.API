@@ -22,6 +22,7 @@ namespace MSS.WLIM.Login.API.Services
             public string Token { get; set; }
             public string Name { get; set; }
             public string Role { get; set; }
+            public string Location { get; set; }
         }
 
         public async Task<AuthResponse> Validate(string emailId, string password)
@@ -33,12 +34,14 @@ namespace MSS.WLIM.Login.API.Services
             {
                 string role = await _userLoginRepository.GetUserRole(emailId);
                 string userName = await _userLoginRepository.GetUserName(emailId);
-                string token = GenerateToken(emailId, role, userName);
+                string location = await _userLoginRepository.GetUserLocation(emailId);
+                string token = GenerateToken(emailId, role, userName, location);
                 authResponse = new AuthResponse
                 {
                     Token = token,
                     Name = userName,
-                    Role = role
+                    Role = role,
+                    Location = location
                 };
             }
 
@@ -46,7 +49,7 @@ namespace MSS.WLIM.Login.API.Services
         }
 
 
-        private string GenerateToken(string emailId, string role, string userName)
+        private string GenerateToken(string emailId, string role, string userName, string location)
         {
             try
             {
@@ -57,7 +60,8 @@ namespace MSS.WLIM.Login.API.Services
                 {
                     new Claim(ClaimTypes.Name, emailId),
                     new Claim(ClaimTypes.Role, role), // Add the user's role to the claims
-                    new Claim("UserName", userName) // Custom claim for employee name
+                    new Claim("UserName", userName), // Custom claim for employee name
+                    new Claim("UserLocation", location)
                 };
 
                 var token = new JwtSecurityToken(

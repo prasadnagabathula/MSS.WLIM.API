@@ -43,7 +43,8 @@ namespace MSS.WLIM.User.API.Services
                 UpdatedDate = employee.UpdatedDate,
                 Profile = employee.Profile,
                 PhoneNo = employee.PhoneNo,
-                Role = employee.Roles?.RoleName
+                Role = employee.Roles?.RoleName,
+                Location = employee.Location,
             }).ToList();
 
             return empDtos;
@@ -76,7 +77,8 @@ namespace MSS.WLIM.User.API.Services
                 UpdatedDate = employee.UpdatedDate,
                 Profile = employee.Profile,
                 PhoneNo = employee.PhoneNo,
-                Role = employee.Roles?.RoleName
+                Role = employee.Roles?.RoleName,
+                Location = employee.Location,
             };
         }
 
@@ -208,6 +210,7 @@ namespace MSS.WLIM.User.API.Services
             employee.IsActive = true;
             employee.CreatedBy = "SYSTEM";
             employee.CreatedDate = DateTime.Now;
+            employee.Location = empDto.Location;
             employee.Password = PasswordHasher.HashPassword(empDto.Password);
             _context.WHTblUser.Add(employee);
             await _context.SaveChangesAsync();
@@ -357,6 +360,7 @@ namespace MSS.WLIM.User.API.Services
             employee.IsActive = true;
             employee.UpdatedBy = empDto.UpdatedBy;
             employee.UpdatedDate = DateTime.Now;
+            employee.Location = empDto.Location;
             employee.Password = PasswordHasher.HashPassword(empDto.Password);
 
             // Set the Profile property if a file is uploaded

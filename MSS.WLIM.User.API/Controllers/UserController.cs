@@ -93,7 +93,8 @@ namespace MSS.WLIM.User.API.Controllers
                     Password = createDto.Password,
                     Profile = createDto.Profile,
                     PhoneNo = createDto.PhoneNo,
-                    Role = createDto.Role
+                    Role = createDto.Role,
+                    Location = createDto.Location
                 };
                 var createdUser = await _Service.Add(userDto);
                 return CreatedAtAction(nameof(Get), new { id = createdUser.Id }, createdUser);
@@ -151,7 +152,8 @@ namespace MSS.WLIM.User.API.Controllers
                     Password = updateDto.Password,
                     Profile = updateDto.Profile,
                     PhoneNo = updateDto.PhoneNo,
-                    Role = updateDto.Role
+                    Role = updateDto.Role,
+                    Location = updateDto.Location
                 };
                 await _Service.Update(userDto);
             }
