@@ -23,6 +23,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? Comments { get; set; }
         public string? IdentifiedLocation { get; set; }
         public DateTime? IdentifiedDate { get; set; }
+        public bool? Donated { get; set; }
 
         public ICollection<LostItemRequests> LostItemRequests { get; set; }
     }
@@ -39,7 +40,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? IdentifiedLocation { get; set; }
         public DateTime? IdentifiedDate { get; set; }
         public string? CreatedBy { get; set; }
-
+        public bool? Donated { get; set; }
 
     }
 }

@@ -56,9 +56,9 @@ namespace MSS.WLIM.Upload.API.Services
                     CreatedBy = d.CreatedBy,
                     CreatedDate = d.CreatedDate,
                     UpdatedBy = d.UpdatedBy,
-
                     UpdatedDate = d.UpdatedDate,
-                    FilePath = d.FilePath
+                    FilePath = d.FilePath,
+                    Donated = d.Donated,
 
                 });
             }
