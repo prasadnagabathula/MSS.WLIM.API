@@ -85,7 +85,7 @@ namespace MSS.WLIM.Upload.API.Controllers
                     FilePath = filePath, 
                     ItemId = warehouseItem.Id,
                     QRGeneratedAt = warehouseItem.QRGeneratedAt, 
-                    QRSequencNumber = warehouseItem.QRSequenceNumber, 
+                    QRSequenceNumber = warehouseItem.QRSequenceNumber, 
                     Message = "File uploaded successfully." 
                 });
             }
