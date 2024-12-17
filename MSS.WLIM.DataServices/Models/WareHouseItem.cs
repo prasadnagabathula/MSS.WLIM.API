@@ -23,6 +23,7 @@ namespace MSS.WLIM.DataServices.Models
         public string? Comments { get; set; }
         public string? IdentifiedLocation { get; set; }
         public DateTime? IdentifiedDate { get; set; }
+        public bool? Donated { get; set; }
         public ICollection<LostItemRequests> LostItemRequests { get; set; }
         public int QRSequenceNumber { get; set; }
         public DateTime? QRGeneratedAt { get; set; }
@@ -47,7 +48,7 @@ namespace MSS.WLIM.DataServices.Models
         public DateTime? QRGeneratedAt { get; set; }
         public string? QRCodeContent { get; set; }
         public byte[]? QRCodeImage { get; set; }
-
+        public bool? Donated { get; set; }
 
     }
 }

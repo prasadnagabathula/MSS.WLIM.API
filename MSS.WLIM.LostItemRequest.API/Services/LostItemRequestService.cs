@@ -329,8 +329,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 }
 
                 ClaimRequestCount = await _context.WHTblLostItemRequest.CountAsync();
-                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true).CountAsync();
-                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false).CountAsync();
+                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Claimed").CountAsync();
+                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Resolved").CountAsync();
                 IdentifiedItemsCount = await _context.WareHouseItems.CountAsync();
 
             }
@@ -376,8 +376,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 }
 
                 ClaimRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Location == location).CountAsync();
-                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == true && r.Location == location).CountAsync();
-                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.IsActive == false && r.Location == location).CountAsync();
+                PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Claimed" && r.Location == location).CountAsync();
+                SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Resolved" && r.Location == location).CountAsync();
                 IdentifiedItemsCount = await _context.WareHouseItems.Where(r => r.WarehouseLocation == location).CountAsync();
             }
 
@@ -403,7 +403,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
         public async Task<UserDashboardData> UserCountsData(string user)
         {
             var TotalClaimRequests = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user).CountAsync();
-            var ReturnedClaimsCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && (r.Status == "Approve" || r.Status == "Reject")).CountAsync();
+            /*var ReturnedClaimsCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && (r.Status == "Approve" || r.Status == "Reject")).CountAsync();*/
+            var ReturnedClaimsCount = await _context.WHTblLostItemRequest.Where(r => r.CreatedBy == user && (r.Status == "Resolved")).CountAsync();
             var PendingRequestCount = TotalClaimRequests - ReturnedClaimsCount;
 
             return new UserDashboardData

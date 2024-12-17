@@ -37,6 +37,15 @@ namespace MSS.WLIM.DataServices.Repositories
             return user?.Name; // Return the employee's name
         }
 
+        public async Task<string> GetUserLocation(string emailId)
+        {
+            // Assuming TblEmployee has a property "Name" to store employee's name
+            var user = await _dbContext.WHTblUser
+                .FirstOrDefaultAsync(e => e.EmailId == emailId);
+
+            return user?.Location; // Return the employee's name
+        }
+
         public async Task<bool> Validate(string emailId, string password)
         {
             try

@@ -11,5 +11,6 @@ namespace MSS.WLIM.DataServices.Repositories
         public Task<bool> Validate(string username, string password);
         Task<string> GetUserRole(string emailId); // New method to get the user's role
         Task<string> GetUserName(string emailId);
+        Task<string> GetUserLocation(string emailId);
     }
 }

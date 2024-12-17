@@ -212,6 +212,32 @@ namespace MSS.WLIM.Upload.API.Controllers
             return Ok(data);
         }
 
+        [HttpPatch("update-donated/{id}")]
+        public async Task<IActionResult> UpdateDonatedStatus(string id, [FromBody] bool donated)
+        {
+            try
+            {
+                var wareHouseItem = await _context.WareHouseItems.FindAsync(id);
+                if (wareHouseItem == null)
+                {
+                    return NotFound("Item not found.");
+                }
+
+                wareHouseItem.Donated = donated;
+
+                _context.WareHouseItems.Update(wareHouseItem);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { Message = "Donated status updated successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+
     }
 }
 
