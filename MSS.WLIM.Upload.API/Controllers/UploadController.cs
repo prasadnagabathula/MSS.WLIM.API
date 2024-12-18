@@ -58,6 +58,9 @@ namespace MSS.WLIM.Upload.API.Controllers
                                      .Max(x => (int?)x.QRSequenceNumber) ?? 0;
 
                 var SessionUsername = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
+                var qrGeneratedAt = DateTime.Now;
+                var qrSequenceNumber = maxSequenceNumber + 1;
+
                 var warehouseItem = new WareHouseItem()
                 {
                     Id = item.Id,
@@ -72,8 +75,9 @@ namespace MSS.WLIM.Upload.API.Controllers
                     Comments = item.Comments,
                     IdentifiedLocation = item.IdentifiedLocation,
                     IdentifiedDate = item.IdentifiedDate,
-                    QRSequenceNumber = maxSequenceNumber+1,
-                    QRGeneratedAt = DateTime.Now
+                    QRSequenceNumber = qrSequenceNumber,
+                    QRGeneratedAt = qrGeneratedAt,
+                    QRCodeContent = item.Id + "-" + qrGeneratedAt.ToString("MM-dd-yyyy") +"-"+ qrSequenceNumber.ToString()
                 };
 
                 await _context.WareHouseItems.AddAsync(warehouseItem);
@@ -81,12 +85,14 @@ namespace MSS.WLIM.Upload.API.Controllers
                 // Save the changes to the database
                 await _context.SaveChangesAsync();
 
-                return Ok(new { 
-                    FilePath = filePath, 
+                return Ok(new
+                {
+                    FilePath = filePath,
                     ItemId = warehouseItem.Id,
-                    QRGeneratedAt = warehouseItem.QRGeneratedAt, 
-                    QRSequenceNumber = warehouseItem.QRSequenceNumber, 
-                    Message = "File uploaded successfully." 
+                    QRGeneratedAt = warehouseItem.QRGeneratedAt,
+                    QRSequenceNumber = warehouseItem.QRSequenceNumber,
+                    QRCodeContent = warehouseItem.QRCodeContent,
+                    Message = "File uploaded successfully."
                 });
             }
             catch (Exception ex)
