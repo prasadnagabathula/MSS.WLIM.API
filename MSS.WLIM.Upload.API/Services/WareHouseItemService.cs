@@ -59,6 +59,7 @@ namespace MSS.WLIM.Upload.API.Services
                     UpdatedDate = d.UpdatedDate,
                     FilePath = d.FilePath,
                     Donated = d.Donated,
+                    QRCodeContent = d.QRCodeContent,
 
                 });
             }
