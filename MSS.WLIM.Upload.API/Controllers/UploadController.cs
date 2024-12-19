@@ -218,6 +218,19 @@ namespace MSS.WLIM.Upload.API.Controllers
             return Ok(data);
         }
 
+        [HttpGet("getById/{id}")]
+        public async Task<ActionResult<WareHouseItem>> GetById(string id)
+        {
+            var data = await _warehouseItemService.GetById(id);
+            
+            if (data == null)
+            {
+                return NotFound(new { message = $"Warehouse item with Id = {id} not found." });
+            }
+
+            return Ok(data);
+        }
+
         [HttpPatch("update-donated/{id}")]
         public async Task<IActionResult> UpdateDonatedStatus(string id, [FromBody] bool donated)
         {

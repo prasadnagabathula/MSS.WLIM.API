@@ -68,6 +68,36 @@ namespace MSS.WLIM.Upload.API.Services
 
         }
 
+        public async Task<WareHouseItem> GetById(string id)
+        {
+            var identifiedItem = await _context.WareHouseItems.FindAsync(id);
+
+            if (identifiedItem == null)
+            {
+                return null;
+            }
+
+            var warehouseItemDto = new WareHouseItem
+            {
+                Id = identifiedItem.Id,
+                Category = identifiedItem.Category,
+                Tags = identifiedItem.Tags,
+                ItemDescription = identifiedItem.ItemDescription,
+                WarehouseLocation = identifiedItem.WarehouseLocation,
+                Comments = identifiedItem.Comments,
+                CreatedBy = identifiedItem.CreatedBy,
+                CreatedDate = identifiedItem.CreatedDate,
+                UpdatedBy = identifiedItem.UpdatedBy,
+                UpdatedDate = identifiedItem.UpdatedDate,
+                FilePath = identifiedItem.FilePath,
+                Donated = identifiedItem.Donated,
+                QRCodeContent = identifiedItem.QRCodeContent,
+            };
+
+            return warehouseItemDto;
+        }
+
+
         public Task<WareHouseItem> Update(WareHouseItem employee)
         {
             throw new NotImplementedException();
