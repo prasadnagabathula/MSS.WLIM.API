@@ -195,7 +195,7 @@ namespace MSS.WLIM.Upload.API.Controllers
         {
             if (!string.IsNullOrEmpty(tag))
             {
-                var wareHouseItems = _context.WareHouseItems.Where(x => (x.Status != "Claimed" && x.Tags != null && x.Tags.Contains(tag)) || (x.Category != null && x.Category.Contains(tag)) || (x.ItemDescription != null && x.ItemDescription.Contains(tag)))?.ToList();
+                var wareHouseItems = _context.WareHouseItems.Where(x => (x.Status != "Claimed") && ( (x.Category != null && x.Category.Contains(tag)) || (x.ItemDescription != null && x.ItemDescription.Contains(tag))))?.ToList();
                 return Ok(wareHouseItems);
             }
             return NotFound();
