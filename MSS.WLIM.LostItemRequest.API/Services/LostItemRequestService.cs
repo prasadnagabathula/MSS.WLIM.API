@@ -414,5 +414,37 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 ReturnedCount = ReturnedClaimsCount             
             };
         }
+
+        public async Task<LostItemRequests> UpdateReceiptStatus(LostItemRequests _object)
+        {
+            var WareHouseItem = await _context.WareHouseItems.FindAsync(_object.Id);
+            if (WareHouseItem == null)
+                throw new KeyNotFoundException("WareHouseItem not found");
+
+            WareHouseItem.Status = "Returned";
+
+            _context.Entry(WareHouseItem).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            var userName = _httpContextAccessor.HttpContext?.User?.FindFirst("UserName")?.Value;
+            var lostItemRequest = await _context.WHTblLostItemRequest
+                                    .FirstOrDefaultAsync(x => x.ClaimId == WareHouseItem.Id);
+
+            if (lostItemRequest == null)
+                throw new KeyNotFoundException("lostItemRequest not found");
+
+            lostItemRequest.AdditionalInformation = _object.AdditionalInformation;
+            lostItemRequest.IsActive = false;
+            lostItemRequest.Status = "Returned";
+            lostItemRequest.UpdatedBy = userName;
+            lostItemRequest.UpdatedDate = DateTime.Now;
+            lostItemRequest.DateTimeWhenLost = DateTime.Now;
+
+            _context.Entry(lostItemRequest).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return _object;
+        }
+
     }
 }

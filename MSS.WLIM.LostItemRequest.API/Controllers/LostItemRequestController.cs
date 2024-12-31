@@ -240,5 +240,37 @@ namespace MSS.WLIM.LostItemRequest.API.Controllers
             _logger.LogInformation("Fetching Dashboard Data");
             return Ok(await _Service.UserCountsData(user));
         }
+
+
+        [HttpPatch("confirm-receipt/{id}")]
+        public async Task<IActionResult> UpdateReceiptStatus(string id, [FromBody] LostItemRequests updateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Invalid model state for updating LostItemRequests");
+                return BadRequest(ModelState);
+            }
+
+            // Check if the ID in the route matches the ID in the body
+            if (id != updateDto.Id)
+            {
+                _logger.LogWarning("LostItemRequests id: {Id} does not match with the id in the request body", id);
+                return BadRequest("ID mismatch.");
+            }
+
+            try
+            {
+                // Map the updateDto back to the original DepartmentDTO
+                //var departmentDto = new DepartmentDTO { Id = id, Name = updateDto.Name };
+                await _Service.UpdateReceiptStatus(updateDto);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                _logger.LogWarning(ex.Message);
+                return NotFound(ex.Message);
+            }
+
+            return NoContent();
+        }
     }
 }

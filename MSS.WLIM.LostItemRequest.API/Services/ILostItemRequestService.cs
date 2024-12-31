@@ -15,5 +15,6 @@ namespace MSS.WLIM.LostItemRequest.API.Services
         public Task<DashboardData> ClaimCount(string location);
         public Task<IEnumerable<WHLocation>> GetLocations();
         public Task<UserDashboardData> UserCountsData(string user);
+        public Task<LostItemRequests> UpdateReceiptStatus(LostItemRequests _object);
     }
 }
