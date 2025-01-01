@@ -33,6 +33,7 @@ namespace MSS.WLIM.LostItemRequest.API.Services
 
             foreach (var d in lostItemRequests)
             {
+                Console.WriteLine(d.WareHouseItem.ReceivedBy+"  "+d.WareHouseItem.ReceivedOn);
                 LostItemRequestsDto.Add(new LostItemRequests
                 {
                     Id = d.Id,
@@ -59,7 +60,12 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                     CreatedDate = d.CreatedDate,
                     UpdatedBy = d.UpdatedBy,
                     UpdatedDate = d.UpdatedDate,
-                    Status = d.Status
+                    Status = d.Status,
+                    WareHouseItem = new WareHouseItem
+                    {
+                        ReceivedBy = d.WareHouseItem.ReceivedBy,
+                        ReceivedOn = d.WareHouseItem.ReceivedOn
+                    },
                 });
             }
 

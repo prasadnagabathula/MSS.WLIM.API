@@ -36,7 +36,6 @@ namespace MSS.WLIM.Upload.API.Services
             throw new NotImplementedException();
         }
 
-
         public async Task<IEnumerable<WareHouseItem>> GetAll()
         {
             var identifiedItem = await _context.WareHouseItems.ToListAsync();
@@ -60,7 +59,8 @@ namespace MSS.WLIM.Upload.API.Services
                     FilePath = d.FilePath,
                     Donated = d.Donated,
                     QRCodeContent = d.QRCodeContent,
-
+                    ReceivedBy = d.ReceivedBy,
+                    ReceivedOn = d.ReceivedOn,
                 });
             }
 
@@ -92,6 +92,8 @@ namespace MSS.WLIM.Upload.API.Services
                 FilePath = identifiedItem.FilePath,
                 Donated = identifiedItem.Donated,
                 QRCodeContent = identifiedItem.QRCodeContent,
+                ReceivedBy = identifiedItem.ReceivedBy,
+                ReceivedOn = identifiedItem.ReceivedOn,
             };
 
             return warehouseItemDto;

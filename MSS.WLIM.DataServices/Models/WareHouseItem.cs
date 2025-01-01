@@ -29,6 +29,8 @@ namespace MSS.WLIM.DataServices.Models
         public DateTime? QRGeneratedAt { get; set; }
         public string? QRCodeContent { get; set; }
         public byte[]? QRCodeImage { get; set; }
+        public string? ReceivedBy { get; set; }
+        public DateTime? ReceivedOn { get; set; }
 
     }
 
@@ -49,6 +51,8 @@ namespace MSS.WLIM.DataServices.Models
         public string? QRCodeContent { get; set; }
         public byte[]? QRCodeImage { get; set; }
         public bool? Donated { get; set; }
+        public string? ReceivedBy  { get; set; }
+        public DateTime? ReceivedOn { get; set; }
 
     }
 }
