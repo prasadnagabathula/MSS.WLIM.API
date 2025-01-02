@@ -255,7 +255,21 @@ namespace MSS.WLIM.Upload.API.Controllers
             }
         }
 
+        [HttpPut("Upload/{id}")]
+        public async Task<IActionResult> Update(string id, [FromBody] WareHouseItem updateWareHouseItem)
+        {
 
+            try
+            {
+                await _warehouseItemService.Update(updateWareHouseItem);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+
+            return Ok(updateWareHouseItem);
+        }
 
     }
 }

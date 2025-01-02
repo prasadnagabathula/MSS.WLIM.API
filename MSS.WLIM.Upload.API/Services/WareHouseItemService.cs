@@ -100,9 +100,24 @@ namespace MSS.WLIM.Upload.API.Services
         }
 
 
-        public Task<WareHouseItem> Update(WareHouseItem employee)
+        public async Task<WareHouseItem> Update(WareHouseItem _objectWareHouseItem)
         {
-            throw new NotImplementedException();
+            var warehouseitem = await _context.WareHouseItems.FindAsync(_objectWareHouseItem.Id);
+
+            if (warehouseitem == null)
+                throw new KeyNotFoundException("ItemRequest not found");
+
+            // Update only the necessary fields
+            warehouseitem.ItemDescription = _objectWareHouseItem.ItemDescription ?? warehouseitem.ItemDescription;
+            warehouseitem.Category = _objectWareHouseItem.Category ?? warehouseitem.Category;
+            warehouseitem.Tags = _objectWareHouseItem.Tags ?? warehouseitem.Tags;
+            warehouseitem.Comments = _objectWareHouseItem.Comments ?? warehouseitem.Comments;
+
+            _context.Entry(warehouseitem).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+            return warehouseitem; 
         }
+
     }
 }
