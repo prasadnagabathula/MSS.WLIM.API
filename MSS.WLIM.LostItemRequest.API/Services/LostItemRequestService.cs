@@ -283,6 +283,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
             int PendingRequestCount = 0;
             int SuccessRequestCount = 0;
             int IdentifiedItemsCount = 0;
+            int ExpiredItemsCount = 0;
+            int DonatedItemsCount = 0;
             if (location == "All")
             {
                 var locations = await _context.WareHouseItems.Where(r => r.WarehouseLocation != null)
@@ -338,6 +340,9 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Claimed").CountAsync();
                 SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Returned").CountAsync();
                 IdentifiedItemsCount = await _context.WareHouseItems.CountAsync();
+                ExpiredItemsCount = await _context.WareHouseItems.Where(w => EF.Functions.DateDiffDay(w.CreatedDate, DateTime.Now) > 30 && w.Donated == false).CountAsync();
+                DonatedItemsCount = await _context.WareHouseItems.Where(r => r.Donated == true).CountAsync();
+
 
             }
             else if (await _context.WareHouseItems.Where(w => w.WarehouseLocation == location).CountAsync() > 0)
@@ -385,6 +390,9 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                 PendingRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Claimed" && r.Location == location).CountAsync();
                 SuccessRequestCount = await _context.WHTblLostItemRequest.Where(r => r.Status == "Returned" && r.Location == location).CountAsync();
                 IdentifiedItemsCount = await _context.WareHouseItems.Where(r => r.WarehouseLocation == location).CountAsync();
+                ExpiredItemsCount = await _context.WareHouseItems.Where(w => w.WarehouseLocation == location &&
+                EF.Functions.DateDiffDay(w.CreatedDate, DateTime.Now) > 30 && w.Donated == false).CountAsync();
+                DonatedItemsCount = await _context.WareHouseItems.Where(r => r.Donated == true && r.WarehouseLocation == location).CountAsync();
             }
 
             return new DashboardData
@@ -396,6 +404,8 @@ namespace MSS.WLIM.LostItemRequest.API.Services
                     PendingRequestCount = PendingRequestCount,
                     SuccessRequestCount = SuccessRequestCount,
                     IdentifiedItemsCount = IdentifiedItemsCount,
+                    ExpiredItemsCount = ExpiredItemsCount,
+                    DonatedItemsCount = DonatedItemsCount,
                 },
                 category = categoryData
             };

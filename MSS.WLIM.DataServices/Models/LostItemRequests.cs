@@ -82,6 +82,8 @@ namespace MSS.WLIM.DataServices.Models
         public int PendingRequestCount { get; set; } = 0;
         public int SuccessRequestCount { get; set; } = 0;
         public int IdentifiedItemsCount { get; set; } = 0;
+        public int ExpiredItemsCount { get; set; } = 0;
+        public int DonatedItemsCount { get; set; } = 0;
     }
     public class Age
     {

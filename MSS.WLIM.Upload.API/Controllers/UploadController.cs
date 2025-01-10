@@ -77,7 +77,8 @@ namespace MSS.WLIM.Upload.API.Controllers
                     IdentifiedDate = item.IdentifiedDate,
                     QRSequenceNumber = qrSequenceNumber,
                     QRGeneratedAt = qrGeneratedAt,
-                    QRCodeContent = item.Id + "-" + qrGeneratedAt.ToString("MM-dd-yyyy") +"-"+ qrSequenceNumber.ToString()
+                    QRCodeContent = item.Id + "-" + qrGeneratedAt.ToString("MM-dd-yyyy") + "-" + qrSequenceNumber.ToString(),
+                    Donated = false
                 };
 
                 await _context.WareHouseItems.AddAsync(warehouseItem);
